@@ -141,13 +141,13 @@ int main(int argc, const char * argv[])
 
 
     // Read Localization TSV
-    char buf[4096];
-    char out[4096];
+    char buf[BUFFER_SIZE];
+    char out[BUFFER_SIZE];
     while (fgets(buf, sizeof(buf) - 1, fp_t))
     {
         LocaleTSV l = getLocaleData(buf);
 
-        char guf[4096];
+        char guf[BUFFER_SIZE];
         while (fgets(guf, sizeof(guf) - 1, fp_s))
         {
 
