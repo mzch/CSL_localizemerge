@@ -142,28 +142,38 @@ int main(int argc, const char * argv[])
 
     // Read Localization TSV
     char buf[BUFFER_SIZE];
+    char org[BUFFER_SIZE];
     char out[BUFFER_SIZE];
     while (fgets(buf, sizeof(buf) - 1, fp_t))
     {
-        LocaleTSV l = getLocaleData(buf);
+        strcpy(org, buf);
 
-        char guf[BUFFER_SIZE];
-        while (fgets(guf, sizeof(guf) - 1, fp_s))
+        if (buf[0] == '#')
         {
+            strcpy(out, buf);
+        }
+        else
+        {
+            LocaleTSV l = getLocaleData(buf);
 
-            TranslatedTSV t = getTranslationData(guf);
-
-            if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key) && l.value[0] != '[')
+            char guf[BUFFER_SIZE];
+            while (fgets(guf, sizeof(guf) - 1, fp_s))
             {
-                sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
-                break;
+
+                TranslatedTSV t = getTranslationData(guf);
+
+                if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key) && l.value[0] != '[')
+                {
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
+                    break;
+                }
             }
+            if (feof(fp_s))
+            {
+                strcpy(out, org);
+            }
+            rewind(fp_s);
         }
-        if (feof(fp_s))
-        {
-            sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index,  l.value);
-        }
-        rewind(fp_s);
         fputs(out, fp_w);
     }
 
