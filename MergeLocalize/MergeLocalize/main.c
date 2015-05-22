@@ -164,7 +164,7 @@ int main(int argc, const char * argv[])
 
                 if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key) && l.value[0] != '[')
                 {
-                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\r\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
                     break;
                 }
             }
