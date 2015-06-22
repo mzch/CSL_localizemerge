@@ -118,6 +118,7 @@ int main(int argc, const char * argv[])
     if (argc < 4)
     {
         fprintf(stderr, "Missing arguments...\n");
+        fprintf(stderr, "%s En.tsv Ja.tsv Output.tsv\n\n", argv[0]);
         exit (1);
     }
 
