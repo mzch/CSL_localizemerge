@@ -133,11 +133,13 @@ int main(int argc, const char * argv[])
     if (! fp_s)
     {
         fprintf(stderr, "File not found: %s\n", argv[2]);
+        exit (3);
     }
     FILE * fp_w = fopen(argv[3], "w");
     if (! fp_w)
     {
         fprintf(stderr, "File not open: %s\n", argv[3]);
+        exit (4);
     }
 
 
