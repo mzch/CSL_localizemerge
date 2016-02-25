@@ -182,10 +182,15 @@ int main(int argc, const char * argv[])
 
                     if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key))
                     {
+                        if (! strlen(t.translation))
+                        {
+                            printf("Missing translation: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
+                            exit (7);
+                        }
                         char * crlf = strchr(t.translation, CRLF);
                         if (crlf)
                         {
-                            printf("Illegal translation with CRLF: %d", line_num);
+                            printf("Illegal translation with CRLF: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
                             exit (6);
                         }
 
@@ -197,7 +202,7 @@ int main(int argc, const char * argv[])
             }
             if (feof(fp_s))
             {
-                printf("Missing translation: %d\n", line_num);
+                printf("Missing translation: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
                 exit (7);
             }
             rewind(fp_s);
