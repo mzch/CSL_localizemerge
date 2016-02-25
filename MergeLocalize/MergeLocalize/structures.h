@@ -21,4 +21,5 @@ typedef struct {
 } TranslatedTSV;
 
 #define TAB         '\t'
+#define CRLF        '\n'
 #define BUFFER_SIZE (8192 * 2)
