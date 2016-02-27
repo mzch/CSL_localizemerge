@@ -12,55 +12,68 @@
 
 #include "structures.h"
 
+char * trim(char * buf)
+{
+    for (char * p = buf + strlen(buf) - 1; buf < p; p--)
+    {
+        if (* p == SPC || * p == CRLF)
+            * p = '\0';
+        else
+            break;
+    }
+    
+    return buf;
+}
+
 LocaleTSV getLocaleData(char * buf)
 {
     LocaleTSV l;
 
     l.translation = l.value = l.index = l.ref_key = l.key = l.name = l.ref_name = "";
 
-    char *p = strchr(buf, TAB);
-    *p = '\0';
-    l.name = buf;
+    char * p = strchr(buf, TAB);
+    * p = '\0';
+    l.name = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return l;
-    *p = '\0';
-    l.key = buf;
+    * p = '\0';
+    l.key = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return l;
-    *p = '\0';
-    l.ref_name = buf;
+    * p = '\0';
+    l.ref_name = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return l;
-    *p = '\0';
-    l.ref_key = buf;
+    * p = '\0';
+    l.ref_key = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return l;
-    *p = '\0';
-    l.index = buf;
+    * p = '\0';
+    l.index = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return l;
-    *p = '\0';
-    l.value = buf;
+    * p = '\0';
+    l.value = trim(buf);
 
     return l;
 }
@@ -72,42 +85,43 @@ TranslatedTSV getTranslationData(char * buf)
 
     t.index = t.value = t.id = t.key = t.translation = "";
 
-    char *p = strchr(buf, TAB);
+    char * p = strchr(buf, TAB);
     if (! p)
         return t;
-    *p = '\0';
-    t.id = buf;
+    * p = '\0';
+    t.id = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return t;
-    *p = '\0';
-    t.index = buf;
-    p++;
-    buf = p;
-    p = strchr(buf, TAB);
-    if (! p)
-        return t;
-    *p = '\0';
-    t.key = buf;
+    * p = '\0';
+    t.index = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return t;
-    *p = '\0';
-    t.value = buf;
+    * p = '\0';
+    t.key = trim(buf);
 
     p++;
     buf = p;
     p = strchr(buf, TAB);
     if (! p)
         return t;
-    *p = '\0';
-    t.translation = buf;
+    * p = '\0';
+    t.value = trim(buf);
+
+    p++;
+    buf = p;
+    p = strchr(buf, TAB);
+    if (! p)
+        return t;
+    * p = '\0';
+    t.translation = trim(buf);
 
     return t;
 }
@@ -172,6 +186,7 @@ int main(int argc, const char * argv[])
             else
             {
                 char guf[BUFFER_SIZE];
+                int t_line_num = 1;
             
                 fgets(guf, sizeof(guf) - 1, fp_s);      // 先頭行を読み飛ばす
             
@@ -179,32 +194,34 @@ int main(int argc, const char * argv[])
                 {
 
                     TranslatedTSV t = getTranslationData(guf);
+                    t_line_num++;
 
                     if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key))
                     {
                         if (! strlen(t.translation))
                         {
-                            printf("Missing translation: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
-                            exit (7);
+                            printf("Missing translation: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
+                            exit (6);
                         }
                         char * crlf = strchr(t.translation, CRLF);
                         if (crlf)
                         {
-                            printf("Illegal translation with CRLF: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
-                            exit (6);
+                            printf("Illegal translation with CRLF: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
+                            exit (7);
                         }
 
                         sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
-                        break;
+                        goto rewind_top;
                     }
             
                 }
+                if (feof(fp_s))
+                {
+                    printf("Missing translated line: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
+                    exit (8);
+                }
             }
-            if (feof(fp_s))
-            {
-                printf("Missing translation: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
-                exit (7);
-            }
+rewind_top:
             rewind(fp_s);
         }
         fputs(out, fp_w);
