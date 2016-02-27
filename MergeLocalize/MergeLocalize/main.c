@@ -171,59 +171,70 @@ int main(int argc, const char * argv[])
         line_num++;
         strcpy(org, buf);
 
-        if (buf[0] == '#')
+        LocaleTSV l = getLocaleData(buf);
+            
+        if (l.value[0] == '[' && l.value[1] == '[')
         {
-            strcpy(out, buf);
+            strcpy(out, org);
         }
         else
         {
-            LocaleTSV l = getLocaleData(buf);
-            
-            if (l.value[0] == '[' && l.value[1] == '[')
+            if (! strcmp(l.name, "###HEADER") && ! strcmp(l.ref_name, "###HEADER"))
             {
-                strcpy(out, org);
-            }
-            else
-            {
-                char guf[BUFFER_SIZE];
-                int t_line_num = 1;
-            
-                fgets(guf, sizeof(guf) - 1, fp_s);      // 先頭行を読み飛ばす
-            
-                while (fgets(guf, sizeof(guf) - 1, fp_s))
+                if (! strcmp(l.index, "2"))
                 {
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t日本語\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index);
+                }
+                else
+                if (! strcmp(l.index, "3"))
+                {
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t(JAPANESE)\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index);
+                }
+                else
+                {
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value);
+                }
+                goto rewind_top;
+            }
+            
+            char guf[BUFFER_SIZE];
+            int t_line_num = 1;
+            
+            fgets(guf, sizeof(guf) - 1, fp_s);      // 先頭行を読み飛ばす
+            
+            while (fgets(guf, sizeof(guf) - 1, fp_s))
+            {
 
-                    TranslatedTSV t = getTranslationData(guf);
-                    t_line_num++;
+                TranslatedTSV t = getTranslationData(guf);
+                t_line_num++;
 
-                    if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key))
+                if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key))
+                {
+                    if (! strlen(t.translation))
                     {
-                        if (! strlen(t.translation))
-                        {
-                            printf("Missing translation: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
-                            exit (6);
-                        }
-                        char * crlf = strchr(t.translation, CRLF);
-                        if (crlf)
-                        {
-                            printf("Illegal translation with CRLF: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
-                            exit (7);
-                        }
-
-                        sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
-                        goto rewind_top;
+                        printf("Missing translation: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
+                        exit (6);
                     }
+                    char * crlf = strchr(t.translation, CRLF);
+                    if (crlf)
+                    {
+                        printf("Illegal translation with CRLF: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
+                        exit (7);
+                    }
+
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
+                    goto rewind_top;
+                }
             
-                }
-                if (feof(fp_s))
-                {
-                    printf("Missing translated line: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
-                    exit (8);
-                }
             }
-rewind_top:
-            rewind(fp_s);
+            if (feof(fp_s))
+            {
+                printf("Missing translated line: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
+                exit (8);
+            }
         }
+rewind_top:
+        rewind(fp_s);
         fputs(out, fp_w);
     }
 
