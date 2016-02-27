@@ -178,25 +178,25 @@ int main(int argc, const char * argv[])
             strcpy(out, org);
         }
         else
+        if (! strcmp(l.name, "###HEADER") && ! strcmp(l.ref_name, "###HEADER"))
         {
-            if (! strcmp(l.name, "###HEADER") && ! strcmp(l.ref_name, "###HEADER"))
+            if (! strcmp(l.index, "2"))
             {
-                if (! strcmp(l.index, "2"))
-                {
-                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t日本語\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index);
-                }
-                else
-                if (! strcmp(l.index, "3"))
-                {
-                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t(JAPANESE)\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index);
-                }
-                else
-                {
-                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value);
-                }
-                goto rewind_top;
+                sprintf(out, "%s\t%s\t%s\t%s\t%s\t日本語\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index);
             }
-            
+            else
+            if (! strcmp(l.index, "3"))
+            {
+                sprintf(out, "%s\t%s\t%s\t%s\t%s\t(JAPANESE)\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index);
+            }
+            else
+            {
+                sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value);
+            }
+                goto rewind_top;
+        }
+        else
+        {    
             char guf[BUFFER_SIZE];
             int t_line_num = 1;
             
