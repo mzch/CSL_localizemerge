@@ -193,7 +193,7 @@ int main(int argc, const char * argv[])
             {
                 sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value);
             }
-                goto rewind_top;
+            goto rewind_top;
         }
         else
         {    
