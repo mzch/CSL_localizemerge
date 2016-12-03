@@ -23,4 +23,4 @@ typedef struct {
 #define TAB         '\t'
 #define SPC         ' '
 #define CRLF        '\n'
-#define BUFFER_SIZE (8192 * 2)
+#define BUFFER_SIZE (8192 * 4)
