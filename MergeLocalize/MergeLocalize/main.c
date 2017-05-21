@@ -200,8 +200,6 @@ int main(int argc, const char * argv[])
             char guf[BUFFER_SIZE];
             int t_line_num = 1;
             
-            fgets(guf, sizeof(guf) - 1, fp_s);      // 先頭行を読み飛ばす
-            
             while (fgets(guf, sizeof(guf) - 1, fp_s))
             {
 
