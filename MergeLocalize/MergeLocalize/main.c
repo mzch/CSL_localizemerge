@@ -83,14 +83,22 @@ TranslatedTSV getTranslationData(char * buf)
 {
     TranslatedTSV t;
 
-    t.index = t.value = t.id = t.key = t.translation = "";
+    t.line_num = t.index = t.value = t.id = t.key = t.translation = "";
 
     char * p = strchr(buf, TAB);
     if (! p)
         return t;
     * p = '\0';
-    t.id = trim(buf);
+    t.line_num = trim(buf);
 
+    p++;
+    buf = p;
+    p = strchr(buf, TAB);
+    if (! p)
+        return t;
+    * p = '\0';
+    t.id = trim(buf);
+    
     p++;
     buf = p;
     p = strchr(buf, TAB);
