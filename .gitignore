@@ -30,3 +30,6 @@
 
 # Debug files
 *.dSYM/
+MergeLocalize/MergeLocalize.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+MergeLocalize/MergeLocalize.xcodeproj/project.xcworkspace/xcuserdata/mzch.xcuserdatad/UserInterfaceState.xcuserstate
+MergeLocalize/MergeLocalize.xcodeproj/xcuserdata/mzch.xcuserdatad/xcschemes/xcschememanagement.plist
