@@ -216,10 +216,13 @@ int main(int argc, const char * argv[])
 
                 if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key))
                 {
-                    if (! strlen(t.translation))
+                    char * trans_result;
+                    if (strlen(t.translation))
                     {
-                        printf("Missing translation: [%d(%d)] %s, %s, %s\n", line_num, t_line_num, l.ref_name, l.ref_key, l.index);
-                        exit (6);
+                        trans_result = t.translation;
+                    }
+                    else {
+                        trans_result = l.value;
                     }
                     char * crlf = strchr(t.translation, CRLF);
                     if (crlf)
@@ -228,7 +231,7 @@ int main(int argc, const char * argv[])
                         exit (7);
                     }
 
-                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, t.translation);
+                    sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, trans_result);
                     goto rewind_top;
                 }
             

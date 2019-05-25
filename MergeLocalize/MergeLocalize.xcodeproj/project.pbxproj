@@ -26,6 +26,7 @@
 		3362D1B0470123136A182D58 /* structures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structures.h; sourceTree = "<group>"; };
 		3362D1E36BA649BB3C31A16C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		3362D96839D493C92E911D86 /* MergeLocalize */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MergeLocalize; sourceTree = BUILT_PRODUCTS_DIR; };
+		A429C93E2299AFC10079D079 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +51,7 @@
 		3362DA77878B5355D3B14533 /* MergeLocalize */ = {
 			isa = PBXGroup;
 			children = (
+				A429C93E2299AFC10079D079 /* CMakeLists.txt */,
 				3362D1E36BA649BB3C31A16C /* main.c */,
 				3362D1B0470123136A182D58 /* structures.h */,
 			);
@@ -97,6 +99,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 3362D14932C2548BF6D23A26;
@@ -222,6 +225,7 @@
 				3362D9F917BA098491B10D63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3362D4AF9DF6DD2CB76C9236 /* Build configuration list for PBXProject "MergeLocalize" */ = {
 			isa = XCConfigurationList;
