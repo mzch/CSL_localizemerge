@@ -238,8 +238,7 @@ int main(int argc, const char * argv[])
             }
             if (feof(fp_s))
             {
-                printf("Missing translated line: [%d] %s, %s, %s\n", line_num, l.ref_name, l.ref_key, l.index);
-                exit (8);
+                sprintf(out, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", l.name, l.key, l.ref_name, l.ref_key, l.index, l.value, l.value);
             }
         }
 rewind_top:

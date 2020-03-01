@@ -93,6 +93,12 @@
 			isa = PBXProject;
 			attributes = {
 				ORGANIZATIONNAME = "Leafia Tech.";
+				TargetAttributes = {
+					3362D9D86F39770C8511544E = {
+						DevelopmentTeam = 76NT4JB728;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 3362D4AF9DF6DD2CB76C9236 /* Build configuration list for PBXProject "MergeLocalize" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -204,14 +210,24 @@
 		3362D9F917BA098491B10D63 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 76NT4JB728;
+				PRODUCT_BUNDLE_IDENTIFIER = me.matsumoto.koichi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		3362DCBCE47DB6942559836D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 76NT4JB728;
+				PRODUCT_BUNDLE_IDENTIFIER = me.matsumoto.koichi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
