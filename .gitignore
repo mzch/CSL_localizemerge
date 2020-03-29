@@ -30,6 +30,8 @@
 *.x86_64
 *.hex
 
+.DS_Store
+
 # Debug files
 *.dSYM/
 MergeLocalize/MergeLocalize.xcodeproj/project.xcworkspace/contents.xcworkspacedata
