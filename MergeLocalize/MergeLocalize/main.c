@@ -105,7 +105,7 @@ TranslatedTSV getTranslationData(char * buf)
     if (! p)
         return t;
     * p = '\0';
-    t.index = trim(buf);
+    t.key = trim(buf);
 
     p++;
     buf = p;
@@ -113,7 +113,7 @@ TranslatedTSV getTranslationData(char * buf)
     if (! p)
         return t;
     * p = '\0';
-    t.key = trim(buf);
+    t.index = trim(buf);
 
     p++;
     buf = p;
@@ -214,7 +214,7 @@ int main(int argc, const char * argv[])
                 TranslatedTSV t = getTranslationData(guf);
                 t_line_num++;
 
-                if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.index) && ! strcmp(l.index, t.key))
+                if (! strcmp(l.ref_name, t.key) && ! strcmp(l.ref_key, t.id) && ! strcmp(l.index, t.index))
                 {
                     char * trans_result;
                     if (strlen(t.translation))
