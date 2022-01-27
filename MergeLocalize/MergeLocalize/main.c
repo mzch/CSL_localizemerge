@@ -214,7 +214,7 @@ int main(int argc, const char * argv[])
                 TranslatedTSV t = getTranslationData(guf);
                 t_line_num++;
 
-                if (! strcmp(l.ref_name, t.key) && ! strcmp(l.ref_key, t.id) && ! strcmp(l.index, t.index))
+                if (! strcmp(l.ref_name, t.id) && ! strcmp(l.ref_key, t.key) && ! strcmp(l.index, t.index))
                 {
                     char * trans_result;
                     if (strlen(t.translation))
